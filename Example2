@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="myinvoice1">
+<html >
 <head>  
   <title>My Test</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 	<!--<script scr="invoice.js"></script> -->
 	<script>
 		angular.module('myinvoice1', []).controller('InvoiceController', function() {
-    this.qty = 1;
-    this.cost = 2;
+    this.qty = 0;
+    this.cost = 0;
     this.inCurr = 'EUR';
     this.currencies = ['USD', 'EUR', 'CNY'];
     this.usdToForeignRates = {
@@ -29,7 +29,7 @@
 	</script>
 </head>
 
-<body ng-controller="InvoiceController as kir">
+<body ng-app="myinvoice1" ng-controller="InvoiceController as kir">
 
 	<div>
 	
@@ -49,7 +49,7 @@
 				<span ng-repeat="c in kir.currencies">
 				{{kir.total(c) | currency:c}}<br/><br/>
 				</span><br/>
-				<button class="btn" ng-click="pay()">Pay Here by Clicking</button>
+				<button class="btn" ng-click="kir.pay()">Pay Here by Clicking</button>
 			</div> 
 
 	</div>
