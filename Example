@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="myinvoice1">
+<head>  
+  <title>My Test</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<!--<script scr="invoice.js"></script> -->
+	<script>
+		angular.module('myinvoice1', []).controller('InvoiceController', function() {
+    this.qty = 1;
+    this.cost = 2;
+    this.inCurr = 'EUR';
+    this.currencies = ['USD', 'EUR', 'CNY'];
+    this.usdToForeignRates = {
+      USD: 1,
+      EUR: 0.74,
+      CNY: 6.09
+    };
+
+    this.total = function total(outCurr) {
+      return this.convertCurrency(this.qty * this.cost, this.inCurr, outCurr);
+    };
+    this.convertCurrency = function convertCurrency(amount, inCurr, outCurr) {
+      return amount * this.usdToForeignRates[outCurr] / this.usdToForeignRates[inCurr];
+    };
+    this.pay = function pay() {
+      window.alert("Thanks!");
+    };
+  });
+	</script>
+</head>
+
+<body ng-controller="InvoiceController as kir">
+
+	<div>
+	
+		<b> Invoice:</b>
+			<div >
+				Quantity: <input type="number" min="0" ng-model="kir.qty">				
+			</div><br/>{{kir.qty}}<br/>
+			<div>
+				Costs: <input type="number" min="0" ng-model="kir.cost">
+				<select ng-model="kir.inCurr">
+					<option ng-repeat="c in kir.currencies">{{c}}</option>
+					<br/>
+				</select><br/>
+			</div> 
+			<div><br/>
+				<b>Total:<br/><br/></b>
+				<span ng-repeat="c in kir.currencies">
+				{{kir.total(c) | currency:c}}<br/><br/>
+				</span><br/>
+				<button class="btn" ng-click="pay()">Pay Here by Clicking</button>
+			</div> 
+
+	</div>
+	
+</body>
+</html>
